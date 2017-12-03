@@ -1,0 +1,117 @@
+{% load static from staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/semantic/dist/semantic.min.css' %}">
+  <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'bower_components/semantic/dist/semantic.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="{% static 'js/login.js' %}"></script>
+
+</head>
+<body style="margin: 20px;">
+<h3 style="text-align:center;" >My Notes
+
+
+<div class="ui teal buttons" style="float: right;">
+  <div class="ui button">User</div>
+  <div class="ui floating dropdown icon button">
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <div class="item"><a href="{% url 'login'  %}"><i class="edit icon"></i> Home</a></div>
+      <div class="item"><a href="{% url 'logout'  %}"><i class="delete icon"></i> LogOut</a></div>
+    </div>
+  </div>
+</div>
+
+</h3>
+<div class="ui items">
+  <div class="item">
+    <div class="image">
+      <img src="/static/images/todo.jpg">
+    </div>
+    <div class="content">
+      <a class="header">{{notes}}</a>
+      <div class="meta">
+        <span>Description</span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+    $('.ui.dropdown')
+  .dropdown();
+  </script>
+
+<h4>Edit Note </h4>
+<form class="ui large form"   action="{% url 'share_note' note_id %}" method="POST">{% csrf_token %}
+      <div class="ui stacked segment" style="padding: 0; border-radius:2px; box-shadow: 0 5px 40px rgba(0,0,0,.16)!important;">
+
+        <div class="field" style="margin: 1em;">
+
+          <div class="ui left icon input">
+            <i class="edit icon"></i>
+            <input type="text" name="note" id= "note" placeholder="{{notes}}" >
+          </div>
+        </div>
+
+            <br>
+
+          <div class="six wide column" style="margin: 0; padding: 0; margin: auto;
+    width: 10%; ">
+           <button class="positive ui button" type="submit" style="margin-bottom: 1em;">Edit Note</button>
+        </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+<h4>Share with users </h4>
+
+<form class="ui large form"   action="{% url 'share_note_to_user' note_id %}" method="POST">{% csrf_token %}
+      <div class="ui stacked segment" style="padding: 0; border-radius:2px; box-shadow: 0 5px 40px rgba(0,0,0,.16)!important;">
+
+
+        <div class="field" style="margin: 1em;">
+
+           {% for i in users %}
+        <div class="ui checkbox">
+        <input type="checkbox" name="user_name" value="{{i}}" checked> 
+        <label> {{i}} &nbsp; &nbsp; </label>
+      </div>
+       {% endfor %}
+
+        </div>
+
+            <br>
+
+          <div class="six wide column" style="margin: 0; padding: 0; margin: auto;
+    width: 10%; ">
+           <button class="positive ui button" type="submit" style="margin-bottom: 1em; position: center;">Share Note</button>
+        </div>
+
+        </div>
+
+      </div>
+
+    </form>
+               {% if shared %}
+            <script>
+      myFunction();
+function myFunction() {
+    setTimeout(function(){ alert("Note Shared Succesfully"); }, 200);
+}
+</script>
+     
+      {% endif %}
+
+
+</body>
+</html>

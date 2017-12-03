@@ -1,0 +1,151 @@
+{% load static from staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/semantic/dist/semantic.min.css' %}">
+  <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'bower_components/semantic/dist/semantic.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="{% static 'js/login.js' %}"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+</head>
+<body>
+
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column" style="width: 50%;">
+    <form class="ui large form"   action="{% url 'login' %}" method="POST">{% csrf_token %}
+      <div class="ui stacked segment" style="padding: 0; border-radius:2px; box-shadow: 0 5px 40px rgba(0,0,0,.16)!important;">
+
+      <div class="ui secondary menu" style="margin: 0;">
+        <div class="ui grid" style="padding: 0; margin: 0; width: 100%;">
+         
+          <div class="sixteen wide column" style="padding: 0; margin: 0;">
+            Live Health Notes App
+          </div>
+        </div>
+      </div>
+
+        <div class="field" style="margin: 1em;">
+
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" id= "username" placeholder="Username" required>
+          </div>
+        </div>
+        <div class="field" style="margin: 1em;">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+          </div>
+
+            <br><br>
+
+          <div class="six wide column" style="margin: 0; padding: 0;">
+           <button class="positive ui button" type="submit" style="margin-bottom: 1em;">Sign In</button>
+        </div>
+
+
+        </div>
+
+
+
+      </div>
+
+      {% if message %}
+      <div class="ui red message"  id="deletesuccess">{{message}}</div>
+      {% endif %}
+      <div class="ui error message"></div>
+
+    </form>
+
+  </div>
+</div>
+
+
+<br>
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column" style="width: 50%;">
+    <form class="ui large form"   action="{% url 'sign_up' %}" method="POST">{% csrf_token %}
+      <div class="ui stacked segment" style="padding: 0; border-radius:2px; box-shadow: 0 5px 40px rgba(0,0,0,.16)!important;">
+
+      <div class="ui secondary menu" style="margin: 0;">
+        <div class="ui grid" style="padding: 0; margin: 0; width: 100%;">
+         
+          <div class="sixteen wide column" style="padding: 0; margin: 0;">
+            SignUp For New User
+          </div>
+        </div>
+      </div>
+
+        <div class="field" style="margin: 1em;">
+
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" id= "username" placeholder="Username" required>
+          </div>
+        </div>
+
+        <div class="field" style="margin: 1em;">
+
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="email" name="email" id= "email" placeholder="email" required>
+          </div>
+        </div>
+
+
+        <div class="field" style="margin: 1em;">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+          </div>
+
+            <br><br>
+
+          <div class="six wide column" style="margin: 0; padding: 0;">
+           <button class="positive ui button" type="submit" style="margin-bottom: 1em;">Sign Up</button>
+        </div>
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+      {% if sign_up %}
+            <script>
+      myFunction();
+function myFunction() {
+    setTimeout(function(){ alert("You registered successfully for notes app. Please login to continue."); }, 200);
+}
+</script>
+     
+      {% endif %}
+
+           {% if already %}
+            <script>
+      myFunction();
+function myFunction() {
+    setTimeout(function(){ alert("User alreasy exists with the same username or email"); }, 200);
+}
+</script>
+     
+      {% endif %}
+
+
+      <div class="ui error message"></div>
+
+    </form>
+
+  </div>
+</div>
+
+</body>
+</html>

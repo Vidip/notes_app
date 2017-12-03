@@ -1,0 +1,127 @@
+{% load static from staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/semantic/dist/semantic.min.css' %}">
+  <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'bower_components/semantic/dist/semantic.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="{% static 'js/login.js' %}"></script>
+</head>
+<body style="background-color: #f6f6f6; margin: 20px;">
+<h3 style="text-align: center;">My Notes
+<!--<a class="ui blue image label" href="{% url 'logout'  %}" >
+  <div class="detail">LogOut</div>
+</a>-->
+
+<div class="ui teal buttons" style="float: right;">
+  <div class="ui button">{{profile}}</div>
+  <div class="ui floating dropdown icon button">
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <div class="item"><a href="{% url 'logout'  %}"><i class="delete icon"></i> LogOut</a></div>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+    $('.ui.dropdown')
+  .dropdown();
+  </script>
+
+
+</h3>
+<div class="ui cards">
+  {% for a in notes %}
+  <div class="card">
+    <div class="content">
+      <div class="header">
+    
+        <a href="{% url 'open_note' a.id %}">{{a}}</a>
+              
+      </div>
+      <div class="meta">
+      {% if a.marked %}
+     <i class="check circle icon"></i>
+     {% else %}
+
+     <a class="ui blue image label">
+     Unmarked
+</a>
+
+     {% endif %}
+
+      </div>
+      <div class="description">
+        {{a}}
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="ui three buttons">
+        <a href="{% url 'open_note' a.id %}"><div class="ui basic green button">Show</div></a>
+        <a href="{% url 'delete_note' a.id %}"><div class="ui basic red button">Delete</div></a>
+        <a href="{% url 'mark_note' a.id %}"><div class="ui basic red button">Mark</div></a>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+
+</div>
+<br>
+<h3 style="text-align:center;">Notes Shared by other Users</h3>
+<div class="ui cards">
+  {% for a in shared_notes %}
+  <div class="card">
+    <div class="content">
+      <div class="header">
+    
+        {{a}}
+    
+      </div>
+      <div class="meta">
+  
+      </div>
+      <div class="description">
+       {{a}}
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="ui two buttons">
+        <div class="ui basic red button"><a href="{% url 'delete_note' a.id %}">Delete</a></div>      </div>
+    </div>
+  </div>
+    {% endfor %}
+
+</div>
+
+<h3 style="text-align:center;">Enter New Notes</h3>
+<form class="ui large form"   action="{% url 'add_note' %}" method="POST">{% csrf_token %}
+      <div class="ui stacked segment" style="padding: 0; border-radius:2px; box-shadow: 0 5px 40px rgba(0,0,0,.16)!important;">
+
+        <div class="field" style="margin: 1em;">
+
+          <div class="ui left icon input">
+            <i class="edit icon"></i>
+            <input type="text" name="note" id= "note" placeholder="Enter New Note" >
+          </div>
+        </div>
+
+            <br>
+
+          <div class="six wide column" style="float: center; margin: auto;
+    width: 10%; padding: 0;">
+           <button class="positive ui button" type="submit" style="margin-bottom: 1em; width: 100%;">Add Note</button>
+        </div>
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </form>
+</body>
+</html>
