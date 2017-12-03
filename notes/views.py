@@ -197,14 +197,20 @@ def user_logout(request):
 def share_note(request,note_id):
 	if request.session.get('email'):
 		print note_id
+		list_of_users = []
 		note = user_notes.objects.get(id=note_id)
 		note_text = request.POST['note']
 		note.note = note_text
 		note.save()
 		print note
+		l_users = user_profile.objects.all()
+		for i in l_users:
+			if i.email != request.session.get('email'):
+				list_of_users.append(i.name)
 		context = {
 		"notes" : note,
-		"note_id" : note_id
+		"note_id" : note_id,
+		"users" : list_of_users
 		}
 		return render(request, 'note/notes_page.html',context)
 
@@ -223,8 +229,10 @@ def share_note_to_user(request,note_id):
 			print "inside for loop"
 			user = user_profile.objects.get(name=i)
 			print user
-			if user_notes(user = user , original_note_id = note_id):
-				print "aa"
+			if user_notes.objects.filter(user = user , original_note_id = note_id):
+				update_note = user_notes.objects.get(user = user , original_note_id = note_id)
+				update_note.note = note.note
+				update_note.save()
 			else:
 				n = user_notes(note=new_note , primary_user = False, marked = False, user = user , original_note_id = note_id)
 				n.save()
