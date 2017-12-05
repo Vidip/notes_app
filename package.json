@@ -1,0 +1,19 @@
+{
+  "name": "notes_app",
+  "version": "1.0.0",
+  "description": "Notes App or To-Do list application built on Python Django Framework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vidip/notes_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vidip/notes_app/issues"
+  },
+  "homepage": "https://github.com/Vidip/notes_app#readme"
+}
